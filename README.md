@@ -49,7 +49,7 @@ helm install kubernetes-dashboard . --namespace kubernetes-dashboard --create-na
 ```
 
 
->**NOTE**: Tested with the following versions:
+>**NOTE**: Tested with the following:
 >- Oauth2-proxy: v7.6.0
 >- Kubernetes(AKS): 1.29 with Azure RBAC enabled
 >- Nginx 1.9.6
