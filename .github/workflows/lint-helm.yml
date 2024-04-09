@@ -2,6 +2,8 @@ name: Lint Helm Chart
 
 on:
   push:
+    branches:
+      - "*"
   pull_request:
   workflow_dispatch:
 
@@ -9,13 +11,14 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Helm
-        uses: azure/setup-helm@v1
+        uses: azure/setup-helm@v3.5
+        with:
+          version: v3.12.0
 
-      - name: Lint Chart
+      - name: Lint Helm Charts
         run: helm lint .
