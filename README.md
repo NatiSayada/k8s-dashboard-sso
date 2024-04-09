@@ -57,6 +57,6 @@ helm install kubernetes-dashboard . --namespace kubernetes-dashboard --create-na
 >- Nginx helm version: 4.9.1
 
 
-### References:
+#### References:
 - [Oauth2 Docs](https://oauth2-proxy.github.io/oauth2-proxy/)
 - [Kubernetes Dashboard Access Control](https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/README.md)
