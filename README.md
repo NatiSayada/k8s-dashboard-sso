@@ -58,5 +58,5 @@ helm install kubernetes-dashboard . --namespace kubernetes-dashboard --create-na
 
 
 #### References:
-- [Oauth2 Docs](https://oauth2-proxy.github.io/oauth2-proxy/)
+- [Oauth2-proxy Docs](https://oauth2-proxy.github.io/oauth2-proxy/)
 - [Kubernetes Dashboard Access Control](https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/README.md)
