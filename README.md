@@ -55,3 +55,8 @@ helm install kubernetes-dashboard . --namespace kubernetes-dashboard --create-na
 >- Kubernetes(AKS): 1.29 with Azure RBAC enabled
 >- Nginx 1.9.6
 >- Nginx helm version: 4.9.1
+
+
+### References:
+- [Oauth2 Docs](https://oauth2-proxy.github.io/oauth2-proxy/)
+- [Kubernetes Dashboard Access Control](https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/README.md)
