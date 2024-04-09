@@ -39,6 +39,7 @@ To install the Kubernetes Dashboard SSO, you need to follow these steps:
 
 Start with templating the Kubernetes Dashboard SSO and see that everything is correct.
 ```bash
+helm dependency build
 helm template . --output-dir=./templates_test
 ```
 
