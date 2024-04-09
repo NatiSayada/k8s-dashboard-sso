@@ -39,12 +39,18 @@ To install the Kubernetes Dashboard SSO, you need to follow these steps:
 
 Start with templating the Kubernetes Dashboard SSO and see that everything is correct.
 ```bash
-helm template ./ --namespace kubernetes-dashboard > kubernetes-dashboard-sso.yaml
+helm template . --output-dir=./templates_test
 ```
 
 #### Install the Kubernetes Dashboard SSO
 To install the Kubernetes Dashboard SSO, you need to run the following command:
 ```bash
-helm install kubernetes-dashboard ./ --namespace kubernetes-dashboard
+helm install kubernetes-dashboard . --namespace kubernetes-dashboard --create-namespace
 ```
 
+
+>**NOTE**: Tested with the following versions:
+>- Oauth2-proxy: v7.6.0
+>- Kubernetes(AKS): 1.29 with Azure RBAC enabled
+>- Nginx 1.9.6
+>- Nginx helm version: 4.9.1
