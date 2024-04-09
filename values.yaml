@@ -1,0 +1,32 @@
+kubernetes-dashboard:
+  app:
+    ingress:
+      enabled: true
+      hosts:
+        - <host_name>.<domain_name>
+      ingressClassName: nginx
+      tls:
+        secretName: <you-tls-secret>
+      annotations:
+        nginx.ingress.kubernetes.io/auth-response-headers: "X-Auth-Request-Access-Token"
+        nginx.ingress.kubernetes.io/auth-signin: "https://$host/oauth2/start?rd=$scheme://$http_host$request_uri"
+        nginx.ingress.kubernetes.io/auth-url: "https://$host/oauth2/auth"
+        nginx.ingress.kubernetes.io/proxy-buffer-size: 8k
+        nginx.ingress.kubernetes.io/proxy-buffers-number: '4'
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+        nginx.ingress.kubernetes.io/configuration-snippet: |
+          auth_request_set $access_token $upstream_http_x_auth_request_access_token;
+          proxy_set_header Authorization "Bearer $access_token";
+oauth2Proxy:
+  replicaCount: 1
+  image:
+    repository: "bitnami/oauth2-proxy"
+    pullPolicy: Always
+    tag: 7.6.0
+  azuread:
+    client_id: "<your-client-id>"
+    tenant_id: "<your-tenant-id>"
+
+hostname: <host_name>
+domain: <domain_name>
+tlsSecretName: <your-tls-secret>

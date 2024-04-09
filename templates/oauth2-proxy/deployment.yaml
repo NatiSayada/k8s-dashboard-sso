@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: oauth2-proxy
+  name: oauth2-proxy
+spec:
+  replicas: {{.Values.oauth2Proxy.replicaCount}}
+  selector:
+    matchLabels:
+      app: oauth2-proxy
+  template:
+    metadata:
+      labels:
+        app: oauth2-proxy
+    spec:
+      containers:
+      - name: oauth2-proxy
+        image: "{{ .Values.oauth2Proxy.image.repository }}:{{ .Values.oauth2Proxy.image.tag }}"
+        imagePullPolicy: {{ .Values.oauth2Proxy.image.pullPolicy }}
+        args:
+        - --provider=oidc
+        - --provider-display-name=Azure AD
+        - --email-domain=*
+        - --http-address=0.0.0.0:4180
+        - --cookie-secure=true
+        - --cookie-domain=".{{.Values.domain}}"
+        - --cookie-refresh=59m
+        - --cookie-expire=1h
+        - --pass-access-token=true
+        - --set-xauthrequest=true
+        - --pass-user-headers=true
+        - --oidc-email-claim=sub
+        - --whitelist-domain=.{{.Values.domain}}
+        - --scope=openid email profile 6dae42f8-4368-4678-94ff-3960e28e3630/user.read
+        - --client-id={{.Values.oauth2Proxy.azuread.client_id}}
+        - --oidc-issuer-url=https://login.microsoftonline.com/{{.Values.oauth2Proxy.azuread.tenant_id}}/v2.0
+        - --redirect-url=https://{{.Values.hostname}}.{{.Values.domain}}/oauth2/callback
+        - --skip-claims-from-profile-url=true
+        - --skip-provider-button=true
+        - --session-store-type=redis
+        - --redis-connection-url=redis://redis-service:6379
+        env:
+        - name: OAUTH2_PROXY_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: azure-client-secret
+              name: kubernetes-dashboard-secrets
+        - name: OAUTH2_PROXY_COOKIE_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: cookie-secret
+              name: kubernetes-dashboard-secrets
+        ports:
+        - containerPort: 4180
+          protocol: TCP
